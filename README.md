@@ -1,1 +1,1 @@
-# get_next_line
+Get Next Line is a C function that reads one line at a time from a file or standard input (stdin). It handles reading data up to the end of the line, providing a practical way to retrieve lines from a file iteratively without loading the entire file into memory. This project serves as a great demonstration of memory management and file manipulation concepts in C.
