@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhachem <mhachem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/03 12:01:33 by mhachem           #+#    #+#             */
-/*   Updated: 2025/05/05 17:02:28 by mhachem          ###   ########.fr       */
+/*   Created: 2025/05/05 17:33:29 by mhachem           #+#    #+#             */
+/*   Updated: 2025/05/05 19:41:41 by mhachem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 int	ft_strcmp(char *s1, char *s2)
 {

@@ -6,14 +6,14 @@
 /*   By: mhachem <mhachem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 12:50:05 by mhachem           #+#    #+#             */
-/*   Updated: 2025/05/05 13:15:17 by mhachem          ###   ########.fr       */
+/*   Updated: 2025/05/06 13:52:30 by mhachem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 int	main(void)
 {
@@ -28,7 +28,7 @@ int	main(void)
 	}
 	while ((line = get_next_line(fd)) != NULL)
 	{
-		printf("Ligne: %s", line);
+		printf("ligne : %s", line);
 		free(line);
 	}
 	close(fd);

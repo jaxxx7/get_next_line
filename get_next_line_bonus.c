@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhachem <mhachem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 11:19:28 by mhachem           #+#    #+#             */
-/*   Updated: 2025/05/06 15:58:25 by mhachem          ###   ########.fr       */
+/*   Updated: 2025/05/06 15:55:28 by mhachem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 int	ft_strlen(const char *str)
 {
@@ -44,7 +44,7 @@ static char	*read_and_join(int fd, char *stash, char *tmp)
 		tmp = stash;
 		stash = ft_strjoin(tmp, buf);
 		free(tmp);
-		if (ft_strchr(stash, '\n'))
+		if (ft_strchr(stash, '\n') || !stash || bytes_read < BUFFER_SIZE)
 			break ;
 		bytes_read = read(fd, buf, BUFFER_SIZE);
 	}
@@ -79,28 +79,28 @@ static char	*extract_line(char **stash)
 
 char	*get_next_line(int fd)
 {
-	static char	*stash;
+	static char	*stash[MAX_FD];
 	char		*result;
 	char		*tmp;
 
 	tmp = NULL;
 	if (fd < 0 || BUFFER_SIZE <= 0 || fd > MAX_FD)
 		return (NULL);
-	if (!stash)
-		stash = ft_strdup("");
-	stash = read_and_join(fd, stash, tmp);
-	if (!stash || !*stash)
+	if (!stash[fd])
+		stash[fd] = ft_strdup("");
+	stash[fd] = read_and_join(fd, stash[fd], tmp);
+	if (!stash[fd] || !*stash[fd])
 	{
-		free(stash);
-		stash = NULL;
+		free(stash[fd]);
+		stash[fd] = NULL;
 		return (NULL);
 	}
-	result = extract_line(&stash);
+	result = extract_line(&stash[fd]);
 	if (!result)
 	{
-		result = ft_strdup(stash);
-		free(stash);
-		stash = NULL;
+		result = ft_strdup(stash[fd]);
+		free(stash[fd]);
+		stash[fd] = NULL;
 	}
 	return (result);
 }
