@@ -6,7 +6,7 @@
 /*   By: mhachem <mhachem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 11:19:28 by mhachem           #+#    #+#             */
-/*   Updated: 2025/05/06 15:58:25 by mhachem          ###   ########.fr       */
+/*   Updated: 2025/05/19 15:28:19 by mhachem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ static char	*read_and_join(int fd, char *stash, char *tmp)
 
 	buf = NULL;
 	buf = malloc_buf(buf);
+	// if (read(fd, buf, BUFFER_SIZE) == 0)
+		// return (NULL);
 	bytes_read = read(fd, buf, BUFFER_SIZE);
 	while (bytes_read == BUFFER_SIZE)
 	{
@@ -67,7 +69,7 @@ static char	*extract_line(char **stash)
 	int		len;
 
 	newline = ft_strchr(*stash, '\n');
-	if (!newline)
+	if (!*stash || !newline)
 		return (NULL);
 	len = newline - *stash + 1;
 	line = ft_substr(*stash, 0, len);
@@ -98,8 +100,9 @@ char	*get_next_line(int fd)
 	result = extract_line(&stash);
 	if (!result)
 	{
-		result = ft_strdup(stash);
-		free(stash);
+		if (!stash[0])
+			return (free(stash), stash = NULL, NULL);
+		result = stash;
 		stash = NULL;
 	}
 	return (result);
