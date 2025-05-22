@@ -6,7 +6,7 @@
 /*   By: mhachem <mhachem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 11:19:28 by mhachem           #+#    #+#             */
-/*   Updated: 2025/05/19 15:28:19 by mhachem          ###   ########.fr       */
+/*   Updated: 2025/05/22 11:17:17 by mhachem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,8 @@ static char	*read_and_join(int fd, char *stash, char *tmp)
 
 	buf = NULL;
 	buf = malloc_buf(buf);
-	// if (read(fd, buf, BUFFER_SIZE) == 0)
-		// return (NULL);
 	bytes_read = read(fd, buf, BUFFER_SIZE);
-	while (bytes_read == BUFFER_SIZE)
+	while (bytes_read > 0)
 	{
 		buf[bytes_read] = '\0';
 		tmp = stash;
@@ -50,14 +48,9 @@ static char	*read_and_join(int fd, char *stash, char *tmp)
 			break ;
 		bytes_read = read(fd, buf, BUFFER_SIZE);
 	}
-	if (bytes_read >= 0 && bytes_read < BUFFER_SIZE)
-	{
-		buf[bytes_read] = '\0';
-		tmp = stash;
-		stash = ft_strjoin(tmp, buf);
-		free(tmp);
-	}
 	free(buf);
+	if (!stash || bytes_read < 0)
+		return (free(stash), NULL);
 	return (stash);
 }
 
@@ -92,11 +85,7 @@ char	*get_next_line(int fd)
 		stash = ft_strdup("");
 	stash = read_and_join(fd, stash, tmp);
 	if (!stash || !*stash)
-	{
-		free(stash);
-		stash = NULL;
-		return (NULL);
-	}
+		return (free(stash), stash = NULL, NULL);
 	result = extract_line(&stash);
 	if (!result)
 	{
